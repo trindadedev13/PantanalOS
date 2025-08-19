@@ -13,6 +13,8 @@ typedef unsigned char uint8_t;
 typedef char int8_t;
 typedef uint32_t size_t;
 
+/** C Types */
+#ifndef __cplusplus
 /** boolean type */
 #define false 0
 #define true 1
@@ -21,6 +23,7 @@ typedef uint32_t size_t;
 /** null definition */
 #define NULL ((void*)0)
 #define null ((void*)0)
+#endif
 
 #ifdef __cplusplus
 }
