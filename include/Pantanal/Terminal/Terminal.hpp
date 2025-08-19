@@ -2,6 +2,7 @@
 #define __PANTANAL_TERMINAL_HPP__
 
 #include "Pantanal/types.h"
+#include "Pantanal/String.hpp"
 #include "Pantanal/Graphics/Graphics.hpp"
 
 namespace Pantanal {
@@ -19,9 +20,9 @@ namespace Pantanal {
       uint8_t readKeyScancode();
 
       void putChar(char, uint8_t);
-      void printf(const char*, uint8_t);
+      void printf(const std::String&, uint8_t);
 
-      inline void printf(const char* str) {
+      inline void printf(const std::String& str) {
         printf(str, Graphics::Color::White);
       }
   };

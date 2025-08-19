@@ -1,27 +1,39 @@
 #ifndef __PANTANAL_STRING_HPP__
 #define __PANTANAL_STRING_HPP__
 
+#include "Pantanal/types.h"
+
 namespace Pantanal {
-  namespace String {
-    static const char* fromInt(int value) {
-      static char buf[20];
-      char* p = buf + sizeof(buf) - 1;
-      *p = '\0';
-      bool negative = false;
-      if (value < 0) {
-        negative = true,
-        value = -value;
-      }
-      do {
-        *--p = '0' + (value % 10);
-        value /= 10;
-      } while (value > 0);
-      if (negative) {
-        *--p = '-';
-      }
-      return p;
-    }
+  namespace std {
+    class String {
+      private:
+        char* data;
+        size_t length;
+      public:
+        String();
+        ~String();
+        String(const char*);
+        String(const String&);
+        String(int);
+        String operator+(const String& other) const;
+        String& operator=(const String& other);
+        String& operator=(const char* str);
+        char& operator[](size_t index);
+        const char& operator[](size_t index) const;
+  
+        size_t size() const {
+          return length;
+        }
+
+        const char* c_str() const {
+          return data;
+        }
+    };
+
+    /** to support concatenation of const char* + Pantanal String */
+    String operator+(const char*, const String&);
   }
 }
+
 
 #endif

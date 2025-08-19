@@ -5,11 +5,10 @@
 #include "Pantanal/Kernel/Kernel.hpp"
 
 /** override C++ new & delete operators */
-
 void* operator new(size_t size) {
   void* ptr = Pantanal::Kernel::allocator.alloc(size);
   if (!ptr) {
-    Pantanal::Kernel::panic("Failed to allocate $bytes");
+    Pantanal::Kernel::panic("Failed to allocate " + Pantanal::std::String(size));
   }
   return ptr;
 }

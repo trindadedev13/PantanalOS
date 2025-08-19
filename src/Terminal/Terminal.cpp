@@ -1,6 +1,7 @@
 #include "Pantanal/Terminal/Terminal.hpp"
 
 #include "Pantanal/Asm.hpp"
+#include "Pantanal/String.hpp"
 #include "Pantanal/Keyboard/Keyboard.hpp"
 #include "Pantanal/Graphics/Font.hpp"
 #include "Pantanal/Graphics/Graphics.hpp"
@@ -48,7 +49,7 @@ namespace Pantanal {
     moveCursor(0, 0);
   }
 
-  void Terminal::printf(const char* str, uint8_t color) {
+  void Terminal::printf(const std::String& str, uint8_t color) {
     for (size_t i = 0; str[i] != '\0'; ++i) {
       putChar(str[i], color);
     }

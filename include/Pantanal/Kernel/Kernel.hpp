@@ -2,6 +2,7 @@
 #define __PANTANAL_KERNEL_HPP__
 
 #include "Pantanal/types.h"
+#include "Pantanal/String.hpp"
 #include "Pantanal/Kernel/Allocator/Allocator.hpp"
 #include "Pantanal/Terminal/Terminal.hpp"
 
@@ -10,7 +11,7 @@ namespace Pantanal {
     static Terminal terminal;
     static Allocator::Allocator allocator;
 
-    void panic(const char*);
+    void panic(const std::String&);
     void reboot();
   }
 }

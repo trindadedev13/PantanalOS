@@ -34,7 +34,7 @@ namespace Pantanal {
       }
     }
 
-    void drawString(size_t x, size_t y, const char* str, uint8_t color) {
+    void drawString(size_t x, size_t y, const std::String& str, uint8_t color) {
       size_t fontX = x;
       for (size_t i = 0; str[i] != '\0'; ++i) {
         uint8_t* bitmap = isoFont + (str[i] * FONT_HEIGHT);
@@ -44,7 +44,7 @@ namespace Pantanal {
     }
 
     void drawInt(size_t x, size_t y, int value, uint8_t color) {
-      const char* buf = String::fromInt(value);
+      const std::String buf = std::String(value);
       drawString(x, y, buf, color);
     }
 

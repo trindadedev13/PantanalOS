@@ -23,6 +23,7 @@ ALLOCATOR_SRC    = $(SRC_DIR)/Kernel/Allocator/Allocator.cpp
 
 GRAPHICS_SRC     = $(SRC_DIR)/Graphics/Graphics.cpp
 TERMINAL_SRC     = $(SRC_DIR)/Terminal/Terminal.cpp
+STRING_SRC       = $(SRC_DIR)/String.cpp
 
 #bins
 
@@ -34,8 +35,10 @@ ALLOCATOR_OBJ    = $(BUILD_DIR)/allocator.o
 
 GRAPHICS_OBJ     = $(BUILD_DIR)/graphics.o
 TERMINAL_OBJ     = $(BUILD_DIR)/terminal.o
+STRING_OBJ       = $(BUILD_DIR)/string.o
+
 ALL_OBJS         = $(KERNEL_ENTRY_OBJ) $(KERNEL_OBJ) $(ALLOCATOR_OBJ) $(GRAPHICS_OBJ) \
-$(TERMINAL_OBJ)
+                   $(TERMINAL_OBJ) $(STRING_OBJ)
 
 KERNEL_BIN   = $(BUILD_DIR)/kernel.bin
 OS_IMG       = $(BUILD_DIR)/os.img
@@ -61,6 +64,9 @@ $(GRAPHICS_OBJ): $(GRAPHICS_SRC) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(TERMINAL_OBJ): $(TERMINAL_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(STRING_OBJ): $(STRING_SRC) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(KERNEL_BIN): $(ALL_OBJS)

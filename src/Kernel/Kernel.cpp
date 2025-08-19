@@ -9,7 +9,7 @@
 
 namespace Pantanal {
   namespace Kernel {
-    void panic(const char* msg) {
+    void panic(const std::String& msg) {
       terminal.printf("KERNEL PANIC: ");
       terminal.printf(msg);
       Asm::cli();
@@ -22,10 +22,19 @@ namespace Pantanal {
     }
   }
 
+  /**
+   * function just to test the allocation
+   * should be remove later
+   */
   void testAllocator() {
+    /** 
+     * allocates a new int, set it pointer value to 42
+     * if it succefully allocated
+     * so 42 should appear in screen
+     */
     int* a = new int;
     *a = 42;
-    Kernel::terminal.printf(String::fromInt(*a));
+    Kernel::terminal.printf(std::String(*a));
     delete a;
   }
 }
@@ -45,6 +54,7 @@ extern "C" void kernel_main() {
     Pantanal::Kernel::panic("heapStart não mapeado!");
   }
 
+  /** just to test allocation */
   Pantanal::testAllocator();
 
   while (1){
