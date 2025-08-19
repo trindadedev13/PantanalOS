@@ -2,18 +2,17 @@
 #define __PANTANAL_KERNEL_HPP__
 
 #include "Pantanal/types.h"
-#include "Pantanal/Kernel/multiboot.h"
+#include "Pantanal/Kernel/Allocator/Allocator.hpp"
 #include "Pantanal/Terminal/Terminal.hpp"
 
 namespace Pantanal {
-  struct Kernel {
-    public:
-      Terminal terminal;
+  namespace Kernel {
+    static Terminal terminal;
+    static Allocator::Allocator allocator;
 
-      Kernel();
-      void panic(const char*);
-      void reboot();
-  };
+    void panic(const char*);
+    void reboot();
+  }
 }
 
 extern void (*__init_array_start [])();

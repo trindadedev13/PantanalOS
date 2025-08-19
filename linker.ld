@@ -1,40 +1,46 @@
+OUTPUT_FORMAT("binary")
 ENTRY(_start)
 
 SECTIONS
 {
-    . = 0x7E00; /** kernel starts at 0x7e00 */
+    /** kernel start addr */
+    . = 0x7E00;
 
-    .text : ALIGN(4096)
+    /** kernel code */
+    .text :
     {
-        *(.multiboot)
-        *(.text)
+        *(.text._start)
+        *(.text*)
     }
 
-    .rodata : ALIGN(4096)
+    /** consts */
+    .rodata :
     {
-        *(.rodata)
+        *(.rodata*)
     }
 
-    .init_array : ALIGN(16)
+    /** initialized data */
+    .data :
     {
+        *(.data*)
+    }
+
+    /** not initialized data */
+    .bss :
+    {
+        *(.bss*)
+        *(COMMON)
+    }
+
+    /** cpp global constructors */
+    .init_array :
+    {
+        __init_array_start = .;
         KEEP(*(SORT(.init_array.*)))
         KEEP(*(.init_array))
+        __init_array_end = .;
     }
 
-    .data : ALIGN(4096)
-    {
-        *(.data)
-    }
 
-    .bss : ALIGN(4096)
-    {
-        *(COMMON)
-        *(.bss)
-    }
-
-    /DISCARD/ :
-    {
-        *(.comment)
-        *(.eh_frame)
-    }
+    __kernel_end = .;
 }
