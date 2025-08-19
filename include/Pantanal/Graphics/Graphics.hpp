@@ -42,6 +42,7 @@ namespace Pantanal {
 
     void drawChar(size_t, size_t, uint8_t*, uint8_t);
     void drawString(size_t, size_t, const char*, uint8_t);
+    void drawInt(size_t, size_t, int, uint8_t);
     void drawRect(size_t, size_t, size_t, size_t, uint8_t);
   }
 }

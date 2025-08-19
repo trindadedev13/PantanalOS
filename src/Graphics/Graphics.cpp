@@ -1,6 +1,7 @@
 #include "Pantanal/Graphics/Graphics.hpp"
 
 #include "Pantanal/types.h"
+#include "Pantanal/String.hpp"
 #include "Pantanal/Graphics/Font.hpp"
 
 namespace Pantanal {
@@ -23,14 +24,6 @@ namespace Pantanal {
       }
     }
 
-    void drawRect(size_t x, size_t y, size_t w, size_t h, uint8_t color) {
-      for (size_t rectY = 0; rectY < y + h; ++rectY) {
-        for (size_t rectX = 0; rectX < x + w; ++rectX) {
-          setPixel(rectX, rectY, color);
-        }
-      }
-    }
-
     void drawChar(size_t x, size_t y, uint8_t* bitmap, uint8_t color) {
       for (size_t chY = 0; chY < FONT_HEIGHT; chY++) {
         for (size_t chX = 0; chX < FONT_WIDTH; chX++) {
@@ -47,6 +40,19 @@ namespace Pantanal {
         uint8_t* bitmap = isoFont + (str[i] * FONT_HEIGHT);
         drawChar(fontX, y, bitmap, color);
         fontX += FONT_WIDTH;
+      }
+    }
+
+    void drawInt(size_t x, size_t y, int value, uint8_t color) {
+      const char* buf = String::fromInt(value);
+      drawString(x, y, buf, color);
+    }
+
+    void drawRect(size_t x, size_t y, size_t w, size_t h, uint8_t color) {
+      for (size_t rectY = 0; rectY < y + h; ++rectY) {
+        for (size_t rectX = 0; rectX < x + w; ++rectX) {
+          setPixel(rectX, rectY, color);
+        }
       }
     }
   }
