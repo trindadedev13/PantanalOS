@@ -1,7 +1,7 @@
 #include "Pantanal/Terminal/Terminal.hpp"
 
 #include "Pantanal/Asm.hpp"
-#include "Pantanal/String.hpp"
+#include "Pantanal/Std/String.hpp"
 #include "Pantanal/Keyboard/Keyboard.hpp"
 #include "Pantanal/Graphics/Font.hpp"
 #include "Pantanal/Graphics/Graphics.hpp"

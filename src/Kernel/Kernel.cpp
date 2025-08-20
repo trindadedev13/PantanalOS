@@ -2,7 +2,7 @@
 
 #include "Pantanal/types.h"
 #include "Pantanal/Asm.hpp"
-#include "Pantanal/String.hpp"
+#include "Pantanal/Std/String.hpp"
 #include "Pantanal/Kernel/Allocator/Allocator.hpp"
 #include "Pantanal/Keyboard/Keyboard.hpp"
 #include "Pantanal/Terminal/Terminal.hpp"
@@ -23,20 +23,34 @@ namespace Pantanal {
     }
   }
 
-  /**
-   * function just to test the allocation
-   * should be remove later
-   */
-  void testAllocator() {
-    /** 
-     * allocates a new int, set it pointer value to 42
-     * if it succefully allocated
-     * so 42 should appear in screen
+  namespace Tests {
+    void testPantScript() {
+      Shell::Lang::Lexer lexer(
+        "def help()\n"
+        "end\n"
+        "help()"
+      );
+      auto tokens = lexer.lex();
+      for (auto token : tokens) {
+        Kernel::terminal.println("Token Value: " + token.value);
+      }
+    }
+
+    /**
+     * function just to test the allocation
+     * should be remove later
      */
-    int* a = new int;
-    *a = 42;
-    Kernel::terminal.println(std::String(*a));
-    delete a;
+    void testAllocator() {
+      /** 
+       * allocates a new int, set it pointer value to 42
+       * if it succefully allocated
+       * so 42 should appear in screen
+       */
+      int* a = new int;
+      *a = 42;
+      Kernel::terminal.println(std::String(*a));
+      delete a;
+    }
   }
 }
 
@@ -49,24 +63,12 @@ extern "C" void kernel_main() {
   Pantanal::Kernel::terminal.println("  |            PRESS [ENTER] TO REBOOT            |");
   Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
 
-  volatile uint32_t* test = (uint32_t*)KERNEL_HEAP_START;
-  *test = 0xDEADBEEF;
-  if (*test != 0xDEADBEEF) {
-    Pantanal::Kernel::panic("heapStart não mapeado!");
-  }
-
-  /** just to test allocation */
-  Pantanal::testAllocator();
-
-  Pantanal::Shell::Lang::Lexer lexer(
-    "def help()\n"
-    "end\n"
-    "help()"
-  );
-  auto tokens = lexer.lex();
-  for (auto token : tokens) {
-    Pantanal::Kernel::terminal.println("Token Value: " + token.value);
-  }
+  /**
+   * Call Tests
+   * Should be removed soon
+   */
+  Pantanal::Tests::testAllocator();
+  Pantanal::Tests::testPantScript();
 
   while (1){
     uint8_t scancode = Pantanal::Kernel::terminal.readKeyScancode();

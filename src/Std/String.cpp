@@ -1,5 +1,5 @@
 #include "Pantanal/cstr.h"
-#include "Pantanal/String.hpp"
+#include "Pantanal/Std/String.hpp"
 
 namespace Pantanal {
   namespace std {

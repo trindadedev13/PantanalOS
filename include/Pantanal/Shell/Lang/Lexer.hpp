@@ -2,8 +2,8 @@
 #define __PANTANAL_SHELL_LEXER_HPP__
 
 #include "Pantanal/types.h"
-#include "Pantanal/String.hpp"
-#include "Pantanal/Vec.hpp"
+#include "Pantanal/Std/String.hpp"
+#include "Pantanal/Std/Vec.hpp"
 
 namespace Pantanal {
   namespace Shell {

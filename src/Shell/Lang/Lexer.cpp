@@ -2,7 +2,8 @@
 
 #include "Pantanal/char.h"
 #include "Pantanal/types.h"
-#include "Pantanal/Vec.hpp"
+#include "Pantanal/Std/String.hpp"
+#include "Pantanal/Std/Vec.hpp"
 
 namespace Pantanal {
   namespace Shell {

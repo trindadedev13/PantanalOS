@@ -1,7 +1,7 @@
 #include "Pantanal/Graphics/Graphics.hpp"
 
 #include "Pantanal/types.h"
-#include "Pantanal/String.hpp"
+#include "Pantanal/Std/String.hpp"
 #include "Pantanal/Graphics/Font.hpp"
 
 namespace Pantanal {

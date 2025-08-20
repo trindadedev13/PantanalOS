@@ -23,7 +23,7 @@ KERNEL_ALLOCATOR_SRC    = $(SRC_DIR)/Kernel/Allocator/Allocator.cpp
 
 GRAPHICS_SRC     = $(SRC_DIR)/Graphics/Graphics.cpp
 TERMINAL_SRC     = $(SRC_DIR)/Terminal/Terminal.cpp
-STRING_SRC       = $(SRC_DIR)/String.cpp
+STRING_SRC       = $(SRC_DIR)/Std/String.cpp
 
 # shell folder
 SHELL_LANG_LEXER_SRC = $(SRC_DIR)/Shell/Lang/Lexer.cpp

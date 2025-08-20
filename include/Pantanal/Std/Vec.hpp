@@ -31,6 +31,6 @@ namespace Pantanal {
 }
 
 /** implementation of vec */
-#include "Pantanal/Vec.tpp"
+#include "Pantanal/Std/Vec.tpp"
 
 #endif

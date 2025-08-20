@@ -2,7 +2,7 @@
 #define __PANTANAL_KERNEL_HPP__
 
 #include "Pantanal/types.h"
-#include "Pantanal/String.hpp"
+#include "Pantanal/Std/String.hpp"
 #include "Pantanal/Kernel/Allocator/Allocator.hpp"
 #include "Pantanal/Terminal/Terminal.hpp"
 

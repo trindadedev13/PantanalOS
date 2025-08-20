@@ -2,7 +2,7 @@
 #define __PANTANAL_GRAPHICS_HPP__
 
 #include "Pantanal/types.h"
-#include "Pantanal/String.hpp"
+#include "Pantanal/Std/String.hpp"
 
 namespace Pantanal {
   namespace Graphics {
