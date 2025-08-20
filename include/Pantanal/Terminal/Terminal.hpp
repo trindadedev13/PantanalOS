@@ -25,6 +25,15 @@ namespace Pantanal {
       inline void printf(const std::String& str) {
         printf(str, Graphics::Color::White);
       }
+
+      inline void println(const std::String& str, uint8_t color) {
+        printf(str, color);
+        printf("\n");
+      }
+
+      inline void println(const std::String& str) {
+        println(str, Graphics::Color::White);
+      }
   };
 }
 
