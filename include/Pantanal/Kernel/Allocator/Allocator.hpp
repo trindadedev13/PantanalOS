@@ -3,8 +3,7 @@
 
 #include "Pantanal/types.h"
 
-//#define KERNEL_HEAP_START ((uint32_t)&__kernel_end)
-#define KERNEL_HEAP_START 0x0000000
+#define KERNEL_HEAP_START ((uint32_t)&__kernel_end)
 #define KERNEL_HEAP_SIZE  0x1000000  // 16 MB
 
 extern "C" char __kernel_end;

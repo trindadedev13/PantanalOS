@@ -15,11 +15,14 @@ namespace Pantanal {
         String(const char*);
         String(const String&);
         String(int);
-        String operator+(const String& other) const;
-        String& operator=(const String& other);
-        String& operator=(const char* str);
-        char& operator[](size_t index);
-        const char& operator[](size_t index) const;
+        String operator+(const String&) const;
+        String& operator+=(char);
+        String& operator=(const String&);
+        String& operator=(const char*);
+        char& operator[](size_t);
+        const char& operator[](size_t) const;
+        bool operator==(const String&) const;
+        bool operator==(const char*) const;
   
         size_t size() const {
           return length;

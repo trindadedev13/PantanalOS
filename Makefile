@@ -13,32 +13,38 @@ SRC_DIR      = src
 INCLUDE_DIR  = include
 BUILD_DIR    = build
 
-#sources
-
+# sources
 BOOT_SRC         = $(SRC_DIR)/Boot/boot.asm
 
+# kernel folder
 KERNEL_SRC       = $(SRC_DIR)/Kernel/Kernel.cpp
 KERNEL_ENTRY_SRC = $(SRC_DIR)/Kernel/Kernel.asm
-ALLOCATOR_SRC    = $(SRC_DIR)/Kernel/Allocator/Allocator.cpp
+KERNEL_ALLOCATOR_SRC    = $(SRC_DIR)/Kernel/Allocator/Allocator.cpp
 
 GRAPHICS_SRC     = $(SRC_DIR)/Graphics/Graphics.cpp
 TERMINAL_SRC     = $(SRC_DIR)/Terminal/Terminal.cpp
 STRING_SRC       = $(SRC_DIR)/String.cpp
 
-#bins
+# shell folder
+SHELL_LANG_LEXER_SRC = $(SRC_DIR)/Shell/Lang/Lexer.cpp
 
+# bins
 BOOT_BIN         = $(BUILD_DIR)/boot.bin
 
+# kernel folder
 KERNEL_OBJ       = $(BUILD_DIR)/kernel.o
 KERNEL_ENTRY_OBJ = $(BUILD_DIR)/kernel_entry.o
-ALLOCATOR_OBJ    = $(BUILD_DIR)/allocator.o
+KERNEL_ALLOCATOR_OBJ    = $(BUILD_DIR)/allocator.o
 
 GRAPHICS_OBJ     = $(BUILD_DIR)/graphics.o
 TERMINAL_OBJ     = $(BUILD_DIR)/terminal.o
 STRING_OBJ       = $(BUILD_DIR)/string.o
 
-ALL_OBJS         = $(KERNEL_ENTRY_OBJ) $(KERNEL_OBJ) $(ALLOCATOR_OBJ) $(GRAPHICS_OBJ) \
-                   $(TERMINAL_OBJ) $(STRING_OBJ)
+# shell folder
+SHELL_LANG_LEXER_OBJ = $(BUILD_DIR)/shell_lexer.o
+
+ALL_OBJS         = $(KERNEL_ENTRY_OBJ) $(KERNEL_OBJ) $(KERNEL_ALLOCATOR_OBJ) $(GRAPHICS_OBJ) \
+                   $(TERMINAL_OBJ) $(STRING_OBJ) $(SHELL_LANG_LEXER_OBJ)
 
 KERNEL_BIN   = $(BUILD_DIR)/kernel.bin
 OS_IMG       = $(BUILD_DIR)/os.img
@@ -57,7 +63,7 @@ $(KERNEL_ENTRY_OBJ): $(KERNEL_ENTRY_SRC) | $(BUILD_DIR)
 $(KERNEL_OBJ): $(KERNEL_SRC) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
-$(ALLOCATOR_OBJ): $(ALLOCATOR_SRC) | $(BUILD_DIR)
+$(KERNEL_ALLOCATOR_OBJ): $(KERNEL_ALLOCATOR_SRC) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(GRAPHICS_OBJ): $(GRAPHICS_SRC) | $(BUILD_DIR)
@@ -67,6 +73,9 @@ $(TERMINAL_OBJ): $(TERMINAL_SRC) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(STRING_OBJ): $(STRING_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(SHELL_LANG_LEXER_OBJ): $(SHELL_LANG_LEXER_SRC) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
 $(KERNEL_BIN): $(ALL_OBJS)

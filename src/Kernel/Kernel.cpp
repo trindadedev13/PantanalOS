@@ -6,6 +6,7 @@
 #include "Pantanal/Kernel/Allocator/Allocator.hpp"
 #include "Pantanal/Keyboard/Keyboard.hpp"
 #include "Pantanal/Terminal/Terminal.hpp"
+#include "Pantanal/Shell/Lang/Lexer.hpp"
 
 namespace Pantanal {
   namespace Kernel {
@@ -34,19 +35,19 @@ namespace Pantanal {
      */
     int* a = new int;
     *a = 42;
-    Kernel::terminal.printf(std::String(*a));
+    Kernel::terminal.println(std::String(*a));
     delete a;
   }
 }
 
 extern "C" void kernel_main() {
-  Pantanal::Kernel::terminal.printf("  +-----------------------------------------------+\n");
-  Pantanal::Kernel::terminal.printf("  |              ::Pantanal OS::                  |\n");
-  Pantanal::Kernel::terminal.printf("  +-----------------------------------------------+\n");
-  Pantanal::Kernel::terminal.printf("  |         https://github.com/PantanalBR/        |\n");
-  Pantanal::Kernel::terminal.printf("  +-----------------------------------------------+\n");
-  Pantanal::Kernel::terminal.printf("  |            PRESS [ENTER] TO REBOOT            |\n");
-  Pantanal::Kernel::terminal.printf("  +-----------------------------------------------+\n");
+  Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
+  Pantanal::Kernel::terminal.println("  |              ::Pantanal OS::                  |");
+  Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
+  Pantanal::Kernel::terminal.println("  |         https://github.com/PantanalBR/        |");
+  Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
+  Pantanal::Kernel::terminal.println("  |            PRESS [ENTER] TO REBOOT            |");
+  Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
 
   volatile uint32_t* test = (uint32_t*)KERNEL_HEAP_START;
   *test = 0xDEADBEEF;
@@ -56,6 +57,16 @@ extern "C" void kernel_main() {
 
   /** just to test allocation */
   Pantanal::testAllocator();
+
+  Pantanal::Shell::Lang::Lexer lexer(
+    "def help()\n"
+    "end\n"
+    "help()"
+  );
+  auto tokens = lexer.lex();
+  for (auto token : tokens) {
+    Pantanal::Kernel::terminal.println("Token Value: " + token.value);
+  }
 
   while (1){
     uint8_t scancode = Pantanal::Kernel::terminal.readKeyScancode();

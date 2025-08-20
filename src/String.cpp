@@ -1,3 +1,4 @@
+#include "Pantanal/cstr.h"
 #include "Pantanal/String.hpp"
 
 namespace Pantanal {
@@ -78,7 +79,24 @@ namespace Pantanal {
       result.data[result.length] = '\0';
       return result;
     }
-  
+
+    String& String::operator+=(char other) {
+      // original str + char + null-terminate
+      char* newData = new char[length + 2];
+      for (size_t i = 0; i < length; ++i)
+        newData[i] = data[i];
+
+      // concatenate other and null terminate
+      newData[length] = other;
+      newData[length + 1] = '\0';
+
+      // update data
+      delete[] data;
+      data = newData;
+      ++length;
+      return *this;
+    }
+
     char& String::operator[](size_t index) {
       return data[index];
     }
@@ -100,6 +118,14 @@ namespace Pantanal {
 
     String operator+(const char* lhs, const String& rhs) {
       return String(lhs) + rhs;
+    }
+
+    bool String::operator==(const String& other) const {
+      return str_cmp(data, other.data) == 0;
+    }
+
+    bool String::operator==(const char* other) const {
+      return str_cmp(data, other);
     }
   }
 }
