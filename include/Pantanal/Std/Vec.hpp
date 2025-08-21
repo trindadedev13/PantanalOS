@@ -19,6 +19,7 @@ namespace Pantanal {
 
         void push(const T&);
         T& operator[](size_t) const;
+        Vec<T>& operator<<(const T&);
 
         const T* begin() const { return data; }
         const T* end() const { return data + len; }

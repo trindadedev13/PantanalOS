@@ -7,6 +7,7 @@
 #include "Pantanal/Keyboard/Keyboard.hpp"
 #include "Pantanal/Terminal/Terminal.hpp"
 #include "Pantanal/Shell/Lang/Lexer.hpp"
+#include "Pantanal/Shell/Lang/Parser.hpp"
 
 namespace Pantanal {
   namespace Kernel {
@@ -25,14 +26,24 @@ namespace Pantanal {
 
   namespace Tests {
     void testPantScript() {
+      // tokenize
       Shell::Lang::Lexer lexer(
         "def help()\n"
         "end\n"
         "help()"
       );
       auto tokens = lexer.lex();
-      for (auto token : tokens) {
-        Kernel::terminal.println("Token Value: " + token.value);
+      Kernel::terminal.println(std::String("Tokens: ") + tokens.size(), Graphics::Color::Blue);
+      for (auto& token : tokens) {
+        Kernel::terminal.println("Token Type: " + Shell::Lang::Token::typeToString(token.type) + " Token Value:" + token.value);
+      }
+
+      //parse
+      Shell::Lang::Parser parser(tokens);
+      auto nodes = parser.parse();
+      Kernel::terminal.println(std::String("NODES: ") + nodes.size(), Graphics::Color::Yellow);
+      for (auto& node : nodes) {
+        Shell::Lang::printNode(node);
       }
     }
 

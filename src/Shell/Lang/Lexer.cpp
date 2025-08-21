@@ -41,7 +41,7 @@ namespace Pantanal {
         if (c == '\0') return Token(Token::Eof, "");
 
         if (is_alpha(c) || c == '_') {
-          std::String word;
+          std::String word = "";
           while (is_alpha(peek()) || is_digit(peek()) || peek() == '_') {
             word += advance();
           }
@@ -54,6 +54,7 @@ namespace Pantanal {
         switch (c) {
           case '(': advance(); return Token(Token::LParen, "(");
           case ')': advance(); return Token(Token::RParen, ")");
+          case ',': advance(); return Token(Token::Comma, ",");
         }
 
         advance();

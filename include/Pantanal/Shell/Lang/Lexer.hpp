@@ -12,13 +12,26 @@ namespace Pantanal {
       class Token {
         public:
           enum Type {
-            Identifier,  // hello
-            Keyword,     // def, end
-            LParen,      // (
-            RParen,      // )
-            Unknown,     // ???
-            Eof
+            Unknown    = -1,     // ???
+            Identifier = 0,  // hello
+            Keyword    = 1,     // def, end
+            LParen     = 2,      // (
+            RParen     = 3,      // )
+            Comma      = 4,       // ,
+            Eof        = 5
           };
+
+          static const std::String typeToString(Type type) {
+            switch (type) {
+              case Identifier: return "Identifier";
+              case Keyword:    return "Keyword";
+              case LParen:     return "Left Parenteses";
+              case RParen:     return "Right Parenteses";
+              case Comma:      return "Comma";
+              case Eof:        return "End of File";
+              default:         return "Unknown";
+            };
+          }
 
           Type type;
           std::String value;

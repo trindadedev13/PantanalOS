@@ -32,5 +32,11 @@ namespace Pantanal {
     T& Vec<T>::operator[](size_t idx) const {
       return data[idx];
     }
+
+    template <typename T>
+    Vec<T>& Vec<T>::operator<<(const T& value) {
+      push(value);
+      return *this;
+    }
   }
 }

@@ -16,6 +16,8 @@ namespace Pantanal {
         String(const String&);
         String(int);
         String operator+(const String&) const;
+        String operator+(int);
+
         String& operator+=(char);
         String& operator=(const String&);
         String& operator=(const char*);
@@ -33,8 +35,8 @@ namespace Pantanal {
         }
     };
 
-    /** to support concatenation of const char* + Pantanal String */
     String operator+(const char*, const String&);
+    String operator+(int, const String&);
   }
 }
 

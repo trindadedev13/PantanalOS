@@ -116,16 +116,25 @@ namespace Pantanal {
       return *this;
     }
 
-    String operator+(const char* lhs, const String& rhs) {
-      return String(lhs) + rhs;
-    }
-
     bool String::operator==(const String& other) const {
       return str_cmp(data, other.data) == 0;
     }
 
     bool String::operator==(const char* other) const {
-      return str_cmp(data, other);
+      return str_cmp(data, other) == 0;
+    }
+
+    String String::operator+(int other) {
+      String rhs(other);
+      return *this + rhs;
+    }
+
+    String operator+(const char* lhs, const String& rhs) {
+      return String(lhs) + rhs;
+    }
+
+    String operator+(int lhs, const String& rhs) {
+      return String(lhs) + rhs;
     }
   }
 }

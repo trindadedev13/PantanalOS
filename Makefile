@@ -2,7 +2,7 @@ CC      = g++
 AS      = nasm
 LD      = ld.lld
 
-CFLAGS  = -m32 -ffreestanding -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
+CFLAGS  = -m32 -g -ffreestanding -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 -nodefaultlibs -fno-rtti -fno-exceptions -Wall -Wextra -c \
 -target i386-unknown-none -I$(INCLUDE_DIR)
 
@@ -26,7 +26,8 @@ TERMINAL_SRC     = $(SRC_DIR)/Terminal/Terminal.cpp
 STRING_SRC       = $(SRC_DIR)/Std/String.cpp
 
 # shell folder
-SHELL_LANG_LEXER_SRC = $(SRC_DIR)/Shell/Lang/Lexer.cpp
+SHELL_LANG_LEXER_SRC  = $(SRC_DIR)/Shell/Lang/Lexer.cpp
+SHELL_LANG_PARSER_SRC = $(SRC_DIR)/Shell/Lang/Parser.cpp
 
 # bins
 BOOT_BIN         = $(BUILD_DIR)/boot.bin
@@ -41,10 +42,11 @@ TERMINAL_OBJ     = $(BUILD_DIR)/terminal.o
 STRING_OBJ       = $(BUILD_DIR)/string.o
 
 # shell folder
-SHELL_LANG_LEXER_OBJ = $(BUILD_DIR)/shell_lexer.o
+SHELL_LANG_LEXER_OBJ  = $(BUILD_DIR)/shell_lexer.o
+SHELL_LANG_PARSER_OBJ = $(BUILD_DIR)/shell_parser.o
 
 ALL_OBJS         = $(KERNEL_ENTRY_OBJ) $(KERNEL_OBJ) $(KERNEL_ALLOCATOR_OBJ) $(GRAPHICS_OBJ) \
-                   $(TERMINAL_OBJ) $(STRING_OBJ) $(SHELL_LANG_LEXER_OBJ)
+                   $(TERMINAL_OBJ) $(STRING_OBJ) $(SHELL_LANG_LEXER_OBJ) $(SHELL_LANG_PARSER_OBJ)
 
 KERNEL_BIN   = $(BUILD_DIR)/kernel.bin
 OS_IMG       = $(BUILD_DIR)/os.img
@@ -78,6 +80,9 @@ $(STRING_OBJ): $(STRING_SRC) | $(BUILD_DIR)
 $(SHELL_LANG_LEXER_OBJ): $(SHELL_LANG_LEXER_SRC) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
+$(SHELL_LANG_PARSER_OBJ): $(SHELL_LANG_PARSER_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $< -o $@
+
 $(KERNEL_BIN): $(ALL_OBJS)
 	$(LD) $(LDFLAGS) $(ALL_OBJS) -o $@
 
@@ -88,7 +93,7 @@ run: $(OS_IMG)
 	qemu-system-x86_64 -drive file=$(OS_IMG),format=raw -m 32M
 
 debug: $(OS_IMG)
-	qemu-system-x86_64 -drive file=$(OS_IMG),format=raw -m 32M -serial stdio -d int
+	qemu-system-x86_64 -drive file=$(OS_IMG),format=raw -m 32M -serial stdio -d int -s -S
 
 clean:
 	rm -rf $(BUILD_DIR)
