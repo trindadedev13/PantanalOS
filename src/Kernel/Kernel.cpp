@@ -12,8 +12,8 @@
 namespace Pantanal {
   namespace Kernel {
     void panic(const std::String& msg) {
-      terminal.printf("KERNEL PANIC: ");
-      terminal.printf(msg);
+      Terminal::printf("KERNEL PANIC: ");
+      Terminal::printf(msg);
       Asm::cli();
       Asm::hlt();
       while (1) Asm::hlt();
@@ -33,15 +33,15 @@ namespace Pantanal {
         "help()"
       );
       auto tokens = lexer.lex();
-      Kernel::terminal.println(std::String("Tokens: ") + tokens.size(), Graphics::Color::Blue);
+      Terminal::println(std::String("Tokens: ") + tokens.size(), Graphics::Color::Blue);
       for (auto& token : tokens) {
-        Kernel::terminal.println("Token Type: " + Shell::Lang::Token::typeToString(token.type) + " Token Value:" + token.value);
+        Terminal::println("Token Type: " + Shell::Lang::Token::typeToString(token.type) + " Token Value:" + token.value);
       }
 
       //parse
       Shell::Lang::Parser parser(tokens);
       auto nodes = parser.parse();
-      Kernel::terminal.println(std::String("NODES: ") + nodes.size(), Graphics::Color::Yellow);
+      Terminal::println(std::String("NODES: ") + nodes.size(), Graphics::Color::Yellow);
       for (auto& node : nodes) {
         Shell::Lang::printNode(node);
       }
@@ -59,33 +59,36 @@ namespace Pantanal {
        */
       int* a = new int;
       *a = 42;
-      Kernel::terminal.println(std::String(*a));
+      Terminal::println(std::String(*a));
       delete a;
     }
   }
 }
 
 extern "C" void kernel_main() {
-  Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
-  Pantanal::Kernel::terminal.println("  |              ::Pantanal OS::                  |");
-  Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
-  Pantanal::Kernel::terminal.println("  |         https://github.com/PantanalBR/        |");
-  Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
-  Pantanal::Kernel::terminal.println("  |            PRESS [ENTER] TO REBOOT            |");
-  Pantanal::Kernel::terminal.println("  +-----------------------------------------------+");
+
+using namespace Pantanal;
+
+  Terminal::println("  +-----------------------------------------------+");
+  Terminal::println("  |              ::Pantanal OS::                  |");
+  Terminal::println("  +-----------------------------------------------+");
+  Terminal::println("  |         https://github.com/PantanalBR/        |");
+  Terminal::println("  +-----------------------------------------------+");
+  Terminal::println("  |            PRESS [ENTER] TO REBOOT            |");
+  Terminal::println("  +-----------------------------------------------+");
 
   /**
    * Call Tests
    * Should be removed soon
    */
-  Pantanal::Tests::testAllocator();
-  Pantanal::Tests::testPantScript();
+  Tests::testAllocator();
+  Tests::testPantScript();
 
   while (1){
-    uint8_t scancode = Pantanal::Kernel::terminal.readKeyScancode();
-    if (scancode == Pantanal::Scancode::ENTER) {
-      Pantanal::Kernel::terminal.printf("\nRestarting...\n");
-      Pantanal::Kernel::reboot();
+    uint8_t scancode = Terminal::readKeyScancode();
+    if (scancode == Scancode::ENTER) {
+      Terminal::printf("\nRestarting...\n");
+      Kernel::reboot();
     }
   }
 }

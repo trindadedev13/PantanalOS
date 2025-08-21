@@ -4,11 +4,9 @@
 #include "Pantanal/types.h"
 #include "Pantanal/Std/String.hpp"
 #include "Pantanal/Kernel/Allocator/Allocator.hpp"
-#include "Pantanal/Terminal/Terminal.hpp"
 
 namespace Pantanal {
   namespace Kernel {
-    static Terminal terminal;
     static Allocator::Allocator allocator;
 
     void panic(const std::String&);

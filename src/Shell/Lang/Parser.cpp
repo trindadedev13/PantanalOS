@@ -1,17 +1,17 @@
 #include "Pantanal/Shell/Lang/Parser.hpp"
 
 #include "Pantanal/Asm.hpp"
-#include "Pantanal/Kernel/Kernel.hpp"
 #include "Pantanal/Std/Vec.hpp"
 #include "Pantanal/Std/SharedPtr.hpp"
 #include "Pantanal/Std/Optional.hpp"
 #include "Pantanal/Shell/Lang/Ast.hpp"
 #include "Pantanal/Shell/Lang/Lexer.hpp"
+#include "Pantanal/Terminal/Terminal.hpp"
 
 #define PARSER_ERROR(msg) \
     do { \
-        Kernel::terminal.printf("Parsing error in " + std::String(__func__) + ": ", Graphics::Color::Red); \
-        Kernel::terminal.println(msg); \
+        Pantanal::Terminal::printf("Parsing error in " + std::String(__func__) + ": ", Graphics::Color::Red); \
+        Pantanal::Terminal::println(msg); \
         Asm::hlt(); \
     } while(0)
 

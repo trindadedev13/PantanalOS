@@ -4,7 +4,7 @@
 #include "Pantanal/Std/String.hpp"
 #include "Pantanal/Std/Vec.hpp"
 #include "Pantanal/Std/SharedPtr.hpp"
-#include "Pantanal/Kernel/Kernel.hpp"
+#include "Pantanal/Terminal/Terminal.hpp"
 
 namespace Pantanal {
   namespace Shell {
@@ -58,41 +58,41 @@ namespace Pantanal {
   
       static inline void printNode(const std::SharedPtr<ASTNode>& node, int indent = 0) {
         auto pad = [&](int n) {
-          for (int i = 0; i < n; i++) Kernel::terminal.printf("  ");
+          for (int i = 0; i < n; i++) Pantanal::Terminal::printf("  ");
         };
   
         switch (node->getType()) {
           case ASTNode::Type::Function: {
             auto fn = static_cast<FunctionNode*>(node.operator->());
             pad(indent);
-            Kernel::terminal.printf("Function: " + fn->name + "(");
+            Pantanal::Terminal::printf("Function: " + fn->name + "(");
             for (size_t i = 0; i < fn->params.size(); i++) {
-              Kernel::terminal.printf(fn->params[i]);
-              if (i + 1 < fn->params.size()) Kernel::terminal.printf(", ");
+              Pantanal::Terminal::printf(fn->params[i]);
+              if (i + 1 < fn->params.size()) Pantanal::Terminal::printf(", ");
             }
-            Kernel::terminal.println(")");
+            Pantanal::Terminal::println(")");
             pad(indent);
-            Kernel::terminal.println("{");
+            Pantanal::Terminal::println("{");
             for (auto& stmt : fn->body) printNode(stmt, indent + 1);
             pad(indent);
-            Kernel::terminal.println("}");
+            Pantanal::Terminal::println("}");
             break;
           }
           case ASTNode::Type::Call: {
             auto call = static_cast<CallNode*>(node.operator->());
             pad(indent);
-            Kernel::terminal.printf("Call: " + call->fnName + "(");
+            Pantanal::Terminal::printf("Call: " + call->fnName + "(");
             for (size_t i = 0; i < call->params.size(); i++) {
               printNode(call->params[i], indent + 1);
-              if (i + 1 < call->params.size()) Kernel::terminal.printf(", ");
+              if (i + 1 < call->params.size()) Pantanal::Terminal::printf(", ");
             }
-            Kernel::terminal.println(")");
+            Pantanal::Terminal::println(")");
             break;
           }
           case ASTNode::Type::Literal: {
             auto literal = static_cast<LiteralNode*>(node.operator->());
             pad(indent);
-            Kernel::terminal.printf("Literal(" + literal->value + ")");
+            Pantanal::Terminal::printf("Literal(" + literal->value + ")");
             break;
           }
         }
